@@ -33,21 +33,27 @@ class MoodModel with ChangeNotifier {
   String get excitedMood => _excitedMood;
   String get excitedMoodImage => _excitedMoodImage;
 
+  Color _backgroundColor = Colors.yellow;
+  Color get backgroundColor => _backgroundColor;
+
   void setHappy() {
     _currentMood = _happyMood;
     _currentMoodImage = _happyMoodImage;
+    _backgroundColor = Colors.yellow;
     notifyListeners();
   }
 
   void setSad() {
     _currentMood = _sadMood;
     _currentMoodImage = _sadMoodImage;
+    _backgroundColor = Colors.blue;
     notifyListeners();
   }
 
   void setExcited() {
     _currentMood = _excitedMood;
     _currentMoodImage = _excitedMoodImage;
+    _backgroundColor = Colors.orange;
     notifyListeners();
   }
 }
@@ -68,20 +74,25 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Mood Toggle Challenge')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('How are you feeling?', style: TextStyle(fontSize: 24)),
-            SizedBox(height: 30),
-            MoodDisplay(),
-            SizedBox(height: 30),
-            MoodButtons(),
-          ],
-        ),
-      ),
+    return Consumer<MoodModel>(
+      builder: (context, moodModel, child) {
+        return Scaffold(
+          appBar: AppBar(title: Text('Mood Toggle Challenge')),
+          backgroundColor: moodModel.backgroundColor,
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('How are you feeling?', style: TextStyle(fontSize: 24)),
+                SizedBox(height: 30),
+                MoodDisplay(),
+                SizedBox(height: 30),
+                MoodButtons(),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
