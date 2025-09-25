@@ -9,22 +9,33 @@ void main() {
 
 // Mood Model - The "Brain" of our app
 class MoodModel with ChangeNotifier {
-  String _currentMood = '😊 use your own img here ';
+  String _currentMood = 'Happy';
+  String _currentMoodImage = 'images/emoji_happy.png';
+
+  //String _happyMood = 'Happy';
+  //String _happyMoodImage = 'images/emoji_happy.png';
+
+  //String _happyMood = 'Happy';
+  //String _happyMoodImage = 'images/emoji_happy.png';
 
   String get currentMood => _currentMood;
+  String get currentMoodImage => _currentMoodImage;
 
   void setHappy() {
-    _currentMood = '😊 use your own img here ';
+    _currentMood = 'Happy';
+    _currentMoodImage = 'images/emoji_happy.png';
     notifyListeners();
   }
 
   void setSad() {
-    _currentMood = '😢 use your own img here ';
+    _currentMood = 'Sad';
+    _currentMoodImage = 'images/emoji_sad.png';
     notifyListeners();
   }
 
   void setExcited() {
-    _currentMood = '🎉 use your own img here ';
+    _currentMood = 'Excited';
+    _currentMoodImage = 'images/emoji_excited.png';
     notifyListeners();
   }
 }
@@ -54,7 +65,7 @@ class HomePage extends StatelessWidget {
             Text('How are you feeling?', style: TextStyle(fontSize: 24)),
             SizedBox(height: 30),
             MoodDisplay(),
-            SizedBox(height: 50),
+            SizedBox(height: 30),
             MoodButtons(),
           ],
         ),
@@ -69,7 +80,13 @@ class MoodDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<MoodModel>(
       builder: (context, moodModel, child) {
-        return Text(moodModel.currentMood, style: TextStyle(fontSize: 100));
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(moodModel.currentMood, style: TextStyle(fontSize: 100)),
+            Image.asset(moodModel.currentMoodImage, width: 128, height: 128),
+          ],
+        );
       },
     );
   }
@@ -86,7 +103,23 @@ class MoodButtons extends StatelessWidget {
           onPressed: () {
             Provider.of<MoodModel>(context, listen: false).setHappy();
           },
-          child: Text('Happy 😊 use your own img here '),
+          child: Consumer<MoodModel>(
+            builder: (context, moodModel, child) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(moodModel.currentMood),
+                  Text('  '),
+                  Image.asset(
+                    moodModel.currentMoodImage,
+                    width: 32,
+                    height: 32,
+                  ),
+                ],
+              );
+            },
+          ),
+          //child: Text('Happy 😊 use your own img here '),
         ),
         ElevatedButton(
           onPressed: () {
