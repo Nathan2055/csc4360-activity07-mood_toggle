@@ -12,30 +12,42 @@ class MoodModel with ChangeNotifier {
   String _currentMood = 'Happy';
   String _currentMoodImage = 'images/emoji_happy.png';
 
-  //String _happyMood = 'Happy';
-  //String _happyMoodImage = 'images/emoji_happy.png';
+  final String _happyMood = 'Happy';
+  final String _happyMoodImage = 'images/emoji_happy.png';
 
-  //String _happyMood = 'Happy';
-  //String _happyMoodImage = 'images/emoji_happy.png';
+  final String _sadMood = 'Sad';
+  final String _sadMoodImage = 'images/emoji_sad.png';
+
+  final String _excitedMood = 'Excited';
+  final String _excitedMoodImage = 'images/emoji_excited.png';
 
   String get currentMood => _currentMood;
   String get currentMoodImage => _currentMoodImage;
 
+  String get happyMood => _happyMood;
+  String get happyMoodImage => _happyMoodImage;
+
+  String get sadMood => _sadMood;
+  String get sadMoodImage => _sadMoodImage;
+
+  String get excitedMood => _excitedMood;
+  String get excitedMoodImage => _excitedMoodImage;
+
   void setHappy() {
-    _currentMood = 'Happy';
-    _currentMoodImage = 'images/emoji_happy.png';
+    _currentMood = _happyMood;
+    _currentMoodImage = _happyMoodImage;
     notifyListeners();
   }
 
   void setSad() {
-    _currentMood = 'Sad';
-    _currentMoodImage = 'images/emoji_sad.png';
+    _currentMood = _sadMood;
+    _currentMoodImage = _sadMoodImage;
     notifyListeners();
   }
 
   void setExcited() {
-    _currentMood = 'Excited';
-    _currentMoodImage = 'images/emoji_excited.png';
+    _currentMood = _excitedMood;
+    _currentMoodImage = _excitedMoodImage;
     notifyListeners();
   }
 }
@@ -108,13 +120,9 @@ class MoodButtons extends StatelessWidget {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(moodModel.currentMood),
+                  Text(moodModel.happyMood),
                   Text('  '),
-                  Image.asset(
-                    moodModel.currentMoodImage,
-                    width: 32,
-                    height: 32,
-                  ),
+                  Image.asset(moodModel.happyMoodImage, width: 32, height: 32),
                 ],
               );
             },
@@ -125,13 +133,39 @@ class MoodButtons extends StatelessWidget {
           onPressed: () {
             Provider.of<MoodModel>(context, listen: false).setSad();
           },
-          child: Text('Sad 😢 use your own img here '),
+          child: Consumer<MoodModel>(
+            builder: (context, moodModel, child) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(moodModel.sadMood),
+                  Text('  '),
+                  Image.asset(moodModel.sadMoodImage, width: 32, height: 32),
+                ],
+              );
+            },
+          ),
         ),
         ElevatedButton(
           onPressed: () {
             Provider.of<MoodModel>(context, listen: false).setExcited();
           },
-          child: Text('Excited 🎉 use your own img here '),
+          child: Consumer<MoodModel>(
+            builder: (context, moodModel, child) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(moodModel.excitedMood),
+                  Text('  '),
+                  Image.asset(
+                    moodModel.excitedMoodImage,
+                    width: 32,
+                    height: 32,
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ],
     );
