@@ -3,10 +3,7 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => MoodModel(),
-      child: MyApp(),
-    ),
+    ChangeNotifierProvider(create: (context) => MoodModel(), child: MyApp()),
   );
 }
 
